@@ -1,5 +1,6 @@
 package ds.PP3_1_2SS.services;
 
+import ds.PP3_1_2SS.models.Role;
 import ds.PP3_1_2SS.models.User;
 import ds.PP3_1_2SS.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -71,8 +69,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Transactional
-    public void updateUser( User updatedUser) {
-//        updatedUser.setId(id);
+    public void updateUser(User updatedUser) {
+        updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         userRepository.save(updatedUser);
+    }
+
+    @Transactional
+    public Set<String> getCurrentUserRoles(User user) {
+        return user.getRoles().stream().map(Role::getRoleName).collect(Collectors.toSet());
     }
 }

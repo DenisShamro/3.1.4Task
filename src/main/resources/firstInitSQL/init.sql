@@ -6,7 +6,7 @@ VALUES ('a', 'a', 'admin', 100,'$2a$12$vb6goF0132r1cOIlZkF9/.HTduPaosiEgEtVkTH1t
 
 INSERT INTO user_role (user_id, role_id)
 VALUES (
-           (SELECT id FROM users WHERE email = 'admin'),
+           (SELECT id FROM users WHERE email = 'admin@mail.ru'),
            (SELECT id FROM roles WHERE role_name = 'ROLE_ADMIN')
        );
-# admin/admin
+# admin@mail.ru /  admin

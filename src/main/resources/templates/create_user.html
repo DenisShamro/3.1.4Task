@@ -1,46 +1,46 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <title>Создать пользователя</title>
-</head>
-<body>
-<h1>Создать нового пользователя</h1>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <title>Создать пользователя</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Создать нового пользователя</h1>-->
 
-<form action="/admin/create" method="post"   >
-
-
-
-  <label for="firstName">Имя:</label>
-  <input type="text" id="firstName" name="firstName" th:value="${user.firstName}" required><br>
-
-  <label for="lastName">Фамилия:</label>
-  <input type="text" id="lastName" name="lastName" th:value="${user.lastName}" required><br>
-
-  <label for="age">Возраст:</label>
-  <input type="number" id="age" name="age" th:value="${user.age}" required><br>
-
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email"  th:value="${user.email}" autocomplete="off"  required><br>
-
-  <label for="password">Пароль:</label>
-  <input type="password"  id="password" name="password"   th:value="${user.password}" autocomplete="new-password"  required><br>
-
-  <label>Роли:</label><br/>
-  <div th:each="role : ${roles}">
-    <input type="checkbox"
-           th:name="roleIds"
-           th:value="${role.id}"/>
-
-    <span th:text="${role.roleName}"></span><br/>
-  </div>
+<!--<form action="/admin/create" method="post"   >-->
 
 
 
+<!--  <label for="firstName">Имя:</label>-->
+<!--  <input type="text" id="firstName" name="firstName" th:value="${user.firstName}" required><br>-->
 
-  <button type="submit">Создать</button>
-</form>
-<br>
+<!--  <label for="lastName">Фамилия:</label>-->
+<!--  <input type="text" id="lastName" name="lastName" th:value="${user.lastName}" required><br>-->
 
-<a href="/admin">Вернуться на главную </a>
-</body>
-</html>
+<!--  <label for="age">Возраст:</label>-->
+<!--  <input type="number" id="age" name="age" th:value="${user.age}" required><br>-->
+
+<!--  <label for="email">Email:</label>-->
+<!--  <input type="email" id="email" name="email"  th:value="${user.email}" autocomplete="off"  required><br>-->
+
+<!--  <label for="password">Пароль:</label>-->
+<!--  <input type="password"  id="password" name="password"   th:value="${user.password}" autocomplete="new-password"  required><br>-->
+
+<!--  <label>Роли:</label><br/>-->
+<!--  <div th:each="role : ${roles}">-->
+<!--    <input type="checkbox"-->
+<!--           th:name="roleIds"-->
+<!--           th:value="${role.id}"/>-->
+
+<!--    <span th:text="${role.roleName}"></span><br/>-->
+<!--  </div>-->
+
+
+
+
+<!--  <button type="submit">Создать</button>-->
+<!--</form>-->
+<!--<br>-->
+
+<!--<a href="/admin">Вернуться на главную </a>-->
+<!--</body>-->
+<!--</html>-->

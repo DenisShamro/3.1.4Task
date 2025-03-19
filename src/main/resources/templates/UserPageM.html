@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>ADMIN</title>
+
+
+    <style>
+        /* Стиль для верхней полоски */
+        .top-bar {
+            background-color: #425f8f; /* Темно-синий цвет */
+            color: white; /* Белый текст */
+            padding: 5px 20px; /* Внутренние отступы */
+            font-size: 18px; /* Размер текста */
+        }
+
+
+        .left-side {
+            flex: 1;
+            background-color: #fffbfd;
+            min-height: 100vh;
+        }
+
+        .right-side {
+            flex: 7;
+            background-color: #f6f6f6;
+            min-height: 100vh;
+        }
+
+        .content {
+            display: none; /* Скрываем все блоки по умолчанию */
+        }
+
+        .content.active {
+            display: block; /* Показываем активный блок */
+        }
+
+        .create-user {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .mb-3 {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .btn-group-vertical .btn {
+
+            margin-bottom: 30px;
+            border: none;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="top-bar">
+    <div class="container d-flex justify-content-between">
+        <span th:text="${currentUser.email + ' with roles: ' + currentUser.getRoles()}"> </span>
+        <a href="/logout" class="text-white text-decoration-none">Logout</a>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="left-side">
+        <!---->
+        <div class="btn-group-vertical w-100 mt-2" role="group" aria-label="Vertical button group">
+            <a th:if="${#lists.contains(currentUserRoles, 'ROLE_ADMIN')}"
+               href="/admin" class="btn btn-primary">Admin</a>
+
+
+            <a th:if="${#lists.contains(currentUserRoles, 'ROLE_USER')}"
+               href="/user" class="btn btn-primary">User</a>
+        </div>
+
+
+    </div>
+
+
+    <div class="right-side">
+
+        <h1> User information-page </h1>
+
+        <div id="usersList" class="content active">
+            <table class="table"><h2>About user</h2>
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">FirstName</th>
+                    <th scope="col">LastName</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Roles</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <td th:text="${currentUser.id}"></td>
+                <td th:text="${currentUser.firstName}"></td>
+                <td th:text="${currentUser.lastName}"></td>
+                <td th:text="${currentUser.age}"></td>
+                <td th:text="${currentUser.email}"></td>
+                <td th:text="${currentUser.getRoles()}"></td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</body>
+</html>

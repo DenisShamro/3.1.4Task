@@ -3,16 +3,18 @@ import ds.PP3_1_2SS.models.Role;
 import ds.PP3_1_2SS.models.User;
 import ds.PP3_1_2SS.services.CustomUserDetailsService;
 import ds.PP3_1_2SS.services.RoleService;
-import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+
 
 import java.util.HashSet;
 import java.util.List;
+
 
 @Controller
 public class AdminAndUserController {
@@ -29,9 +31,28 @@ public class AdminAndUserController {
 
     @GetMapping("/admin")
     public String index(Model model) {
+        User currentUser = userService.getCurrentUserFromContext();
         model.addAttribute("allUsers", userService.findAll());
+        model.addAttribute("currentUser", currentUser);
+
+        model.addAttribute("currentUserRoles", userService.getCurrentUserRoles(currentUser));
+
+        model.addAttribute("emptyUser", new User());
+        model.addAttribute("roles", roleService.getAllRoles());
+
+
         return "AdminPage";
     }
+
+    @GetMapping("/user")
+    public String user( Model model) {
+        User currentUser = userService.getCurrentUserFromContext();
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("currentUserRoles", userService.getCurrentUserRoles(currentUser));
+        return "UserPageM";
+    }
+
+
 
     @PostMapping("/admin/delete")
     public String delete(@RequestParam("userId")Integer id) {
@@ -39,12 +60,7 @@ public class AdminAndUserController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/edit")
-    public String editUser(@RequestParam("id") Integer id, Model model) {
-        model.addAttribute("user", userService.findById(id));
-        model.addAttribute("roles", roleService.getAllRoles());
-        return "edit_user";
-    }
+
 
     @PostMapping("/admin/edit")
     public String confirmUpdate(@ModelAttribute("user") User user, @RequestParam List<Integer> roleIds) {
@@ -55,12 +71,7 @@ public class AdminAndUserController {
     }
 
 
-    @GetMapping("/admin/new")
-    public String showCreateUserForm(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("roles", roleService.getAllRoles());
-        return "create_user";
-    }
+
 
 
     @PostMapping("/admin/create")
@@ -71,12 +82,12 @@ public class AdminAndUserController {
         return "redirect:/admin";
     }
 
+//    @GetMapping("/user")
+//    public String user( Model model) {
+//        model.addAttribute("user", userService.getCurrentUserFromContext());
+//        return "UserPage";
+//    }
 
-    @GetMapping("/user")
-    public String user( Model model) {
-        model.addAttribute("user", userService.getCurrentUserFromContext());
-        return "UserPage";
-    }
 }
 
 

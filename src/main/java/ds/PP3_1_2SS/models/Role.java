@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.HashSet;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -55,7 +56,6 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return roleName;
+        return roleName.replaceAll("ROLE_", "");
     }
-
 }
