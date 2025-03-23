@@ -1,27 +1,30 @@
-package ds.PP3_1_2SS.services;
+package ds.ppJS.services;
 
-import ds.PP3_1_2SS.models.Role;
-import ds.PP3_1_2SS.repositories.RoleRepository;
+import ds.ppJS.models.Role;
+import ds.ppJS.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class RoleService {
 
     private final RoleRepository roleRepository;
 
-    @Autowired
     public RoleService(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
 
     public Optional<Role> findByName(String name) {
         return roleRepository.findByRoleName(name);
+    }
+
+    public Role findById(int id) {
+        return roleRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("role not found"));
     }
 
     public List<Role> getAllRoles() {
@@ -31,6 +34,7 @@ public class RoleService {
     public List<Role> getRolesByIds(List<Integer> id) {
         return roleRepository.findAllById(id);
     }
+
     @Transactional
     public void save(Role role) {
          roleRepository.save(role);

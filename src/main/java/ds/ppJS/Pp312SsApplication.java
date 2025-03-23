@@ -1,4 +1,4 @@
-package ds.PP3_1_2SS;
+package ds.ppJS;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

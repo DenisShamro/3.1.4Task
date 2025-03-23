@@ -1,8 +1,10 @@
-package ds.PP3_1_2SS.services;
+package ds.ppJS.services;
 
-import ds.PP3_1_2SS.models.Role;
-import ds.PP3_1_2SS.models.User;
-import ds.PP3_1_2SS.repositories.UserRepository;
+import ds.ppJS.dto.UserDTO;
+import ds.ppJS.models.Role;
+import ds.ppJS.models.User;
+import ds.ppJS.repositories.RoleRepository;
+import ds.ppJS.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,11 +25,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleService roleService;
 
-    @Autowired
-    public CustomUserDetailsService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public CustomUserDetailsService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
     }
 
     public User getCurrentUserFromContext() {
@@ -49,9 +52,18 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Transactional
-    public void save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+    public User saveOrUpdate(UserDTO userDTO) {
+        User user = new User();
+        if (userDTO.getId() != null) {
+            user.setId(userDTO.getId());
+        }
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setAge(userDTO.getAge());
+        user.setRoles(userDTO.getRoleIds().stream().map(roleService::findById).collect(Collectors.toSet()));
+        return userRepository.save(user);
     }
 
 
@@ -66,12 +78,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Transactional
     public void deleteUserById(Integer id) {
         userRepository.deleteById(id);
-    }
-
-    @Transactional
-    public void updateUser(User updatedUser) {
-        updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-        userRepository.save(updatedUser);
     }
 
     @Transactional

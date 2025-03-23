@@ -1,4 +1,4 @@
-package ds.PP3_1_2SS;
+package ds.ppJS;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

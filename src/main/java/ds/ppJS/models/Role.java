@@ -1,13 +1,7 @@
-package ds.PP3_1_2SS.models;
+package ds.ppJS.models;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
-
-
-import java.util.HashSet;
-
-import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -19,10 +13,7 @@ public class Role implements GrantedAuthority {
 
     private String roleName;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "role_id"),
-//            inverseJoinColumns = @JoinColumn(name = "user_id"))
-//    private Set<User> users = new HashSet<>();
+
 
     public Role() {
     }
