@@ -9,20 +9,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 
-@org.springframework.web.bind.annotation.RestController
+@RestController
 @RequestMapping("/api/admin")
-public class RestController {
+public class AdminRestController {
 
     private final CustomUserDetailsService userService;
     private final RoleService roleService;
 
-    public RestController(CustomUserDetailsService userService, RoleService roleService) {
+    public AdminRestController(CustomUserDetailsService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }

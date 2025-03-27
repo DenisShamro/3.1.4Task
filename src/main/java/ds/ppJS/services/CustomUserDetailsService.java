@@ -36,19 +36,26 @@ public class CustomUserDetailsService implements UserDetailsService {
     public User getCurrentUserFromContext() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
-        return userRepository.findByEmail(userEmail).orElseThrow(() -> new UsernameNotFoundException("email not found"));
+        User user = userRepository.findByEmail(userEmail);
+        if (user == null) {
+            throw new UsernameNotFoundException("user with a such email not found");
+        }
+        return user;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).map(user -> new org.springframework.security.core.userdetails.User(
-                        user.getEmail(),
-                        user.getPassword(),
-                        user.getRoles().stream().
-                                map(role -> new SimpleGrantedAuthority(role.getAuthority())).
-                                collect(Collectors.toSet()))).
-                orElseThrow(() -> new UsernameNotFoundException("email not found"));
-
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("user with a such email not found");
+        }
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                user.getPassword(),
+                user.getRoles().stream()
+                        .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
+                        .collect(Collectors.toSet())
+        );
     }
 
     @Transactional

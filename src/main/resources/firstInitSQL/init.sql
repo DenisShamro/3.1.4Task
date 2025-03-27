@@ -9,6 +9,11 @@ VALUES (
            (SELECT id FROM users WHERE email = 'admin@mail.ru'),
            (SELECT id FROM roles WHERE role_name = 'ROLE_ADMIN')
        );
+INSERT INTO user_role (user_id, role_id)
+VALUES (
+           (SELECT id FROM users WHERE email = 'admin@mail.ru'),
+           (SELECT id FROM roles WHERE role_name = 'ROLE_USER')
+       );
 # admin@mail.ru /  admin
 
 drop table users;

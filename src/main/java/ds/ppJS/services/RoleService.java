@@ -19,8 +19,12 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
-    public Optional<Role> findByName(String name) {
-        return roleRepository.findByRoleName(name);
+    public Role findByName(String name) {
+        Role role = roleRepository.findByRoleName(name);
+        if (role == null) {
+            throw new RuntimeException("Role not found");
+        }
+        return role;
     }
 
     public Role findById(int id) {
